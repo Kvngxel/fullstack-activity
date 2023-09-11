@@ -35,10 +35,33 @@ function App() {
     fetchTodos();
   }, []);   
 
-  return (
+  async function addTodo() {
+    try{
+        const response = await fetch("http://localhost:3000/api/todos2", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            task: "task",
+            is_completed: false
+          }),
+        });
+    
+    // get response in json
+        const data = await response.json();
+    
+    // setting data 
+       } catch (error) {
+    
+    }
+  }
+   
+
+  return (    
     <div>
     <h1 className="text-green-500 font-semibold text-2xl mt-4 mb-3">To-do List</h1>  
-      <input type="text" /><button type="button">Delete</button>
+      <input type="text" name="task"/><button type="button" onClick={addTodo}>Add</button>
       <ul>      
         {todos.map((todo)=>(
           <li key={todo.id} ><input type="checkbox"/> {todo.task} <button type="button">Delete</button> </li>
