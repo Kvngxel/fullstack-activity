@@ -6,7 +6,7 @@ const sql = postgres(process.env.DATABASE_URL, { ssl: 'require' });
 
 async function getPostgresVersion() {
     const result = await sql`select version()`;
-    console.log(result);
+    // console.log(result);
   }
 
 getPostgresVersion()
