@@ -57,6 +57,24 @@ function App() {
     }
   }
 
+  async function deleteItem(id) {
+    try {
+      const response = await fetch(`http://localhost:3000/api/todos2/${id}`, {
+        method: "DELETE",
+      });
+  
+      if (response.ok) {
+        // Remove the deleted item from the local state (todos)
+        setTodos((prevTodos) => prevTodos.filter((todo) => todo.id !== id));
+      } else {
+        console.error("Failed to delete todo");
+      }
+    } catch (error) {
+      console.error("Error deleting todo:", error);
+    }
+  }
+  
+
   return (    
     <div>
     <h1 className="text-green-500 font-semibold text-2xl mt-4 mb-3">To-do List</h1>  
@@ -70,7 +88,7 @@ function App() {
       </form>      
       <ul>      
         {todos.map((todo, i)=>(
-          <li key={i} ><input type="checkbox"/> {todo.task} <button type="button">Delete</button> </li>
+          <li key={i} ><input type="checkbox"/> {todo.task} <button type="button" onClick={() => deleteItem(todo.id)}>Delete</button> </li>
         )) }
       </ul>
     </div>

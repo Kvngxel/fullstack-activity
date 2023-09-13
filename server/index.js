@@ -38,6 +38,23 @@ app.post("/api/todos2", async (req, res) => {
     }
 })
 
+app.delete("/api/todos2/:id", async (req, res) => {
+    const { id } = req.params;
+  
+    try {
+      const deletedTodo = await sql`DELETE FROM todos WHERE id = ${id} RETURNING *`;
+      
+      if (deletedTodo && deletedTodo.length > 0) {
+        res.status(200).json(deletedTodo[0]);
+      } else {
+        res.status(404).send("Todo not found");
+      }
+    } catch (error) {
+      console.error("Error deleting todo:", error);
+      res.status(500).send("Internal server error");
+    }
+  });
+  
 app.listen(3000, () => {
     console.log("Server is running on port 3000")
 });
