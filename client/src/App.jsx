@@ -50,6 +50,9 @@ function App() {
           }),
         });
         const data = await response.json()
+
+      // Clear the input field after adding the task
+      setTaskInputValue("");
       // setTodos((oldTodos) => ([...oldTodos, ...data]))
       setTodos((todos) => todos.concat(data));
        } catch (error) {
