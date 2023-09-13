@@ -5,25 +5,6 @@ import cors from "cors"
 
 const app = express();
 
-const data = [
-    {"id": "1",
-    "task": "Take a bath",
-    "is_completed":true
-    },
-    {"id": "2",
-    "task": "Eatttttt",
-    "is_completed":false
-    },
-    {"id": "3",
-    "task": "Eas some more",
-    "is_completed":false
-    },
-    {"id": "4",
-    "task": "Rest",
-    "is_completed":true
-    }
-]
-
 app.get("/", (req, res) => {
     res.send("Hello")
 })
@@ -49,11 +30,11 @@ app.get("/api/todos", async (req, res) => {
 app.post("/api/todos2", async (req, res) => {
     const { task, is_completed } = req.body
     const todos2 = await sql `INSERT INTO todos (task, is_completed) VALUES (${task}, ${is_completed}) RETURNING *`
-    console.log(todos2)
+    // console.log(todos2)
     if (todos2){
-        res.status(201).send("Successfully inserted, You can return to earth :)")
+        res.status(201).send(todos2)
     } else {
-        res.status(404).send("Error 404")
+        res.status(500).send("Internal server Error")
     }
 })
 
